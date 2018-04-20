@@ -1,6 +1,6 @@
 let component = ReasonReact.statelessComponent("CreatePage");
 
-let make = (~title: string="Create Page", _children) => {
+let make = (~title: string="CreatePage", _children) => {
   ...component,
   render: _self =>
     <div className="App">

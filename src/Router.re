@@ -4,6 +4,8 @@ module Config = {
     | FeedPage
     | DetailPage
     | DraftsPage
+    | RouteTestPage
+    | NotFound
     | CreatePage;
   /** URL -> Route. */
   let routeFromUrl = (url: ReasonReact.Router.url) =>
@@ -13,15 +15,18 @@ module Config = {
     | ["detailpage"] => DetailPage
     | ["draftspage"] => DraftsPage
     | ["createpage"] => CreatePage
-    | _ => FeedPage
+    | ["RouteTestPage"] => RouteTestPage
+    | _ => NotFound
     };
   /** Route -> URL. */
   let routeToUrl = (route: route) =>
     switch (route) {
     | FeedPage => "/feedpage"
-    | DetailPage => "/detailPage"
-    | DraftsPage => "/draftsPage"
-    | CreatePage => "/createPage"
+    | DetailPage => "/detailpage"
+    | DraftsPage => "/draftspage"
+    | CreatePage => "/createpage"
+    | RouteTestPage => "/RouteTestPage"
+    | NotFound => "/NotFound"
     };
 };
 

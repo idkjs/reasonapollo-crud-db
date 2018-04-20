@@ -33,11 +33,6 @@ let make = _children => {
                <ul>
                  <Router.Link route=FeedPage>
                    <li className=(makeCls(Styles.feedRoute))>
-                     ("Blog" |> ste)
-                   </li>
-                 </Router.Link>
-                 <Router.Link route=FeedPage>
-                   <li className=(makeCls(Styles.feedRoute))>
                      ("Feed" |> ste)
                    </li>
                  </Router.Link>
@@ -46,19 +41,31 @@ let make = _children => {
                      ("Drafts" |> ste)
                    </li>
                  </Router.Link>
+                 <Router.Link route=RouteTestPage>
+                   <li className=(makeCls(Styles.draftsRoute))>
+                     ("RouteTestPage" |> ste)
+                   </li>
+                 </Router.Link>
                  <Router.Link route=CreatePage>
                    <li className=(makeCls(Styles.createRoute))>
                      ("+ Create Draft" |> ste)
                    </li>
                  </Router.Link>
                </ul>
+               /* <Router.Link route=FeedPage>
+                    <li className=(makeCls(Styles.feedRoute))>
+                      ("Blog" |> ste)
+                    </li>
+                  </Router.Link> */
                /* <h3> (ReasonReact.stringToElement("Menu")) </h3> */
                (
                  switch (currentRoute) {
                  | FeedPage => <FeedPage />
                  | DetailPage => <DetailPage />
                  | DraftsPage => <DraftsPage />
-                 | CreatePage => <CreatePage />
+                 | RouteTestPage => <RouteTestPage />
+                 | NotFound => <NotFound />
+                 | Router.Config.CreatePage => <CreatePage />
                  }
                )
              </div>
