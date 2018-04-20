@@ -1,0 +1,27 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+.env
+
+# dependencies
+node_modules
+
+# testing
+coverage
+# production
+build
+.netlify
+
+# misc
+.DS_Store
+npm-debug.log
+
+#IDE
+.idea/*
+*.swp
+.vscode
+
+#bucklescript
+.merlin
+.bsb.lock
+npm-debug.log
+/lib/bs/
+
