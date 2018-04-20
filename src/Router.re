@@ -6,6 +6,7 @@ module Config = {
     | DraftsPage
     | RouteTestPage
     | NotFound
+    | GoToPost
     | CreatePage;
   /** URL -> Route. */
   let routeFromUrl = (url: ReasonReact.Router.url) =>
@@ -16,6 +17,7 @@ module Config = {
     | ["draftspage"] => DraftsPage
     | ["createpage"] => CreatePage
     | ["RouteTestPage"] => RouteTestPage
+    | [""]
     | _ => NotFound
     };
   /** Route -> URL. */
