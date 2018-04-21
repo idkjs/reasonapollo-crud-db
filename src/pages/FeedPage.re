@@ -1,28 +1,5 @@
 open Aliases;
 
-/* module Loading = {
-     module Styles = {
-       let loading = ["flex w-100 h-100 items-center justify-center pt7"];
-       let error = ["flex w-100 h-100 items-center justify-center pt7"];
-       let link = ["link", "dim", "dark-gray"];
-       let linkList = ["fr"];
-     };
-     let component = ReasonReact.statelessComponent("Loading");
-     let make = _children => {
-       ...component,
-       render: _self =>
-         <div className=(makeCls(Styles.loading))>
-           <div> ("Loading ..." |> ste) </div>
-         </div>,
-     };
-   }; */
-/* type post = {
-     .
-     "id": string,
-     "isPublished": Js.boolean,
-     "text": string,
-     "title": string,
-   }; */
 module GetFeed = [%graphql
   {|
        query getFeed {
