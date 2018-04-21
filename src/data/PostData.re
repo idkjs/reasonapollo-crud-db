@@ -1,10 +1,15 @@
-type t = {
-  id: option(string),
-  title: option(string),
-  text: option(string),
-  isPublished: option(bool),
-};
-
+/* type post = {
+     id: string,
+     title: string,
+     text: string,
+     isPublished: Js.boolean,
+   }; */
+/* type post = {
+     id: option(string),
+     title: option(string),
+     text: option(string),
+     isPublished: option(bool),
+   }; */
 /*
    type Post {
    id: ID! @unique
@@ -34,17 +39,17 @@ type t = {
    all the nested function calls needed, but not to worry!
    Here are some helpers that’ll come in handy:
       */
-let optionalField = (fieldName, decoder) =>
-  Json.Decode.(optional(field(fieldName, decoder)));
+/* let optionalField = (fieldName, decoder) =>
+     Json.Decode.(optional(field(fieldName, decoder)));
 
-let optionalNullableField = (fieldName, decoder) =>
-  Json.Decode.(optional(field(fieldName, nullable(decoder))));
+   let optionalNullableField = (fieldName, decoder) =>
+     Json.Decode.(optional(field(fieldName, nullable(decoder))));
 
-/* Now we can re-write our decoder like so: */
-let decode = json =>
-  Json.Decode.{
-    id: json |> optionalField("id", string),
-    title: json |> optionalField("title", string),
-    isPublished: json |> optionalField("isPublished", bool),
-    text: json |> optionalField("text", string),
-  };
+   /* Now we can re-write our decoder like so: */
+   let decode = json =>
+     Json.Decode.{
+       id: json |> optionalField("id", string),
+       title: json |> optionalField("title", string),
+       isPublished: json |> optionalField("isPublished", bool),
+       text: json |> optionalField("text", string),
+     }; */
