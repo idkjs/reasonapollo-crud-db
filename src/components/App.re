@@ -1,4 +1,4 @@
-let makeCls = x => Belt.List.reduce(x, "", (a, b) => a ++ " " ++ b);
+open Aliases;
 
 module Styles = {
   let nav = ["pa3", "pa4-ns"];
