@@ -1,7 +1,3 @@
-let component = ReasonReact.statelessComponent("App");
-
-let ste = ReasonReact.stringToElement;
-
 let makeCls = x => Belt.List.reduce(x, "", (a, b) => a ++ " " ++ b);
 
 module Styles = {
@@ -23,52 +19,78 @@ module Styles = {
   ];
 };
 
+type route =
+  | FeedPage
+  | DetailPage(int)
+  | DraftsPage
+  | RouteTestPage
+  | NotFound
+  | CreatePage;
+
+type state = {route};
+
+type action =
+  | ChangeRoute(route);
+
+let reducer = (action, _state) =>
+  switch (action) {
+  | ChangeRoute(route) => ReasonReact.Update({route: route})
+  };
+
+/** URL -> Route. */
+let routeFromUrl = (url: ReasonReact.Router.url) =>
+  switch (url.path) {
+  | [] => FeedPage
+  | ["feedpage"] => FeedPage
+  | ["detailpage", id] => DetailPage(int_of_string(id))
+  | ["draftspage"] => DraftsPage
+  | ["createpage"] => CreatePage
+  | ["RouteTestPage"] => RouteTestPage
+  | _ => NotFound
+  };
+
+let component = ReasonReact.reducerComponent("App");
+
+let ste = ReasonReact.stringToElement;
+
 let make = _children => {
   ...component,
-  render: _self =>
-    <Router.Container>
-      ...(
-           (~currentRoute) =>
-             <div className=(makeCls(Styles.nav))>
-               <ul>
-                 <Router.Link route=FeedPage>
-                   <li className=(makeCls(Styles.feedRoute))>
-                     ("Feed" |> ste)
-                   </li>
-                 </Router.Link>
-                 <Router.Link route=DraftsPage>
-                   <li className=(makeCls(Styles.draftsRoute))>
-                     ("Drafts" |> ste)
-                   </li>
-                 </Router.Link>
-                 <Router.Link route=RouteTestPage>
-                   <li className=(makeCls(Styles.draftsRoute))>
-                     ("RouteTestPage" |> ste)
-                   </li>
-                 </Router.Link>
-                 <Router.Link route=CreatePage>
-                   <li className=(makeCls(Styles.createRoute))>
-                     ("+ Create Draft" |> ste)
-                   </li>
-                 </Router.Link>
-               </ul>
-               /* <Router.Link route=FeedPage>
-                    <li className=(makeCls(Styles.feedRoute))>
-                      ("Blog" |> ste)
-                    </li>
-                  </Router.Link> */
-               /* <h3> (ReasonReact.stringToElement("Menu")) </h3> */
-               (
-                 switch (currentRoute) {
-                 | FeedPage => <FeedPage />
-                 | DetailPage => <DetailPage />
-                 | DraftsPage => <DraftsPage />
-                 | RouteTestPage => <RouteTestPage />
-                 | NotFound => <NotFound />
-                 | Router.Config.CreatePage => <CreatePage />
-                 }
-               )
-             </div>
-         )
-    </Router.Container>,
+  reducer,
+  initialState: () => {route: FeedPage},
+  subscriptions: self => [
+    Sub(
+      () =>
+        ReasonReact.Router.watchUrl(url =>
+          self.send(ChangeRoute(url |> routeFromUrl))
+        ),
+      ReasonReact.Router.unwatchUrl,
+    ),
+  ],
+  render: self =>
+    <nav className=(makeCls(Styles.nav))>
+      <ul>
+        <Link href="feedpage" className=(makeCls(Styles.feedRoute))>
+          ("Feed" |> ste)
+        </Link>
+        <Link href="draftspage" className=(makeCls(Styles.draftsRoute))>
+          ("Drafts" |> ste)
+        </Link>
+        <Link href="RouteTestPage" className=(makeCls(Styles.draftsRoute))>
+          ("Routeurl" |> ste)
+        </Link>
+        <Link href="createpage" className=(makeCls(Styles.createRoute))>
+          ("+ Create Draft" |> ste)
+        </Link>
+      </ul>
+      (
+        switch (self.state.route) {
+        | FeedPage => <FeedPage />
+        | DetailPage(id) => <DetailPage id />
+        | DraftsPage => <DraftsPage />
+        | RouteTestPage => <RouteTestPage />
+        | NotFound => <NotFound />
+        | CreatePage => <CreatePage />
+        }
+      )
+    </nav>,
 };
