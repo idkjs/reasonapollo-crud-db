@@ -67,21 +67,8 @@ let make = _children => {
     ),
   ],
   render: self =>
-    <nav className=(makeCls(Styles.nav))>
-      <ul>
-        <Link href="feedpage" className=(makeCls(Styles.feedRoute))>
-          ("Feed" |> ste)
-        </Link>
-        <Link href="draftspage" className=(makeCls(Styles.draftsRoute))>
-          ("Drafts" |> ste)
-        </Link>
-        <Link href="RouteTestPage" className=(makeCls(Styles.draftsRoute))>
-          ("Routeurl" |> ste)
-        </Link>
-        <Link href="createpage" className=(makeCls(Styles.createRoute))>
-          ("+ Create Draft" |> ste)
-        </Link>
-      </ul>
+    <div>
+      <Nav />
       (
         switch (self.state.route) {
         | FeedPage => <FeedPage />
@@ -92,5 +79,5 @@ let make = _children => {
         | CreatePage => <CreatePage />
         }
       )
-    </nav>,
+    </div>,
 };

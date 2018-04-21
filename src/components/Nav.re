@@ -1,3 +1,46 @@
+open Aliases;
+
+module Styles = {
+  let nav = ["pa3", "pa4-ns"];
+  let feedRoute = ["link", "dim", "black", "b", "f6", "f5-ns", "dib", "mr3"];
+  let draftsRoute = ["link", "dim", "f6", "f5-ns", "dib", "mr3", "black"];
+  let createRoute = [
+    "f6",
+    "link",
+    "dim",
+    "br1",
+    "ba",
+    "ph3",
+    "pv2",
+    "fr",
+    "mb2",
+    "dib",
+    "black",
+  ];
+};
+
+let component = ReasonReact.statelessComponent("Nav");
+
+let make = _children => {
+  ...component,
+  render: self =>
+    <nav className=(makeCls(Styles.nav))>
+      <ul>
+        <Link href="feedpage" className=(makeCls(Styles.feedRoute))>
+          ("Feed" |> ste)
+        </Link>
+        <Link href="draftspage" className=(makeCls(Styles.draftsRoute))>
+          ("Drafts" |> ste)
+        </Link>
+        <Link href="RouteTestPage" className=(makeCls(Styles.draftsRoute))>
+          ("Routeurl" |> ste)
+        </Link>
+        <Link href="createpage" className=(makeCls(Styles.createRoute))>
+          ("+ Create Draft" |> ste)
+        </Link>
+      </ul>
+    </nav>,
+};
 /* type link = {name: string};
 
    let links = [

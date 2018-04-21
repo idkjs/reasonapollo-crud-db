@@ -17,6 +17,13 @@ module Loading = {
   };
 };
 
+/* type post = {
+     .
+     "id": string,
+     "isPublished": Js.boolean,
+     "text": string,
+     "title": string,
+   }; */
 module GetFeed = [%graphql
   {|
        query getFeed {
@@ -67,15 +74,13 @@ let make = _children => {
                  | Data(response) =>
                    response##feed
                    |> Array.mapi((index, post) =>
-                        <div key=(index |> string_of_int)>
-                          (post##title |> ste)
-                        </div>
+                        <PostItem
+                          key=(index |> string_of_int)
+                          title=post##title
+                          post
+                        />
                       )
                    |> ReasonReact.arrayToElement
-                 /* |> Array.mapi((index, post) =>
-                         <PostItem post key=(index |> string_of_int) />
-                       )
-                    |> ReasonReact.arrayToElement */
                  }
                )
              </div>
