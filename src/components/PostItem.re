@@ -22,20 +22,17 @@
 let component = ReasonReact.statelessComponent("PostItem");
 
 /* let make = (~title, ~isDraft: Js.boolean, ~post, _children) => { */
-let make = (~title, ~post, _children) => {
+let make = (~title, ~post, ~id, _children) => {
   ...component,
   render: _self =>
     <div>
-
-        <Link className="no-underline ma1" href=("/detailpage/" ++ post##id)>
-          <h2 className="f3 black-80 fw4 lh-solid">
-            (title |> Aliases.ste)
-          </h2>
-          /* (post##title |> Aliases.ste) */
-          <p className="black-80 fw3"> (post##text |> Aliases.ste) </p>
-        </Link>
-      </div>,
-      /* let title = isDraft == Js.true_ ? title ++ "Draft" : title; */
+      <Link className="no-underline ma1" href=("/post/" ++ id)>
+        <h2 className="f3 black-80 fw4 lh-solid"> (title |> Aliases.ste) </h2>
+        /* (post##title |> Aliases.ste) */
+        <p className="black-80 fw3"> (post##text |> Aliases.ste) </p>
+      </Link>
+    </div>,
+  /* let title = isDraft == Js.true_ ? title ++ "Draft" : title; */
   /* let title = ! post##isPublished ? post##title ++ "Draft" : post##title; */
 };
 /*

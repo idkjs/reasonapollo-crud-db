@@ -1,27 +1,26 @@
-open Aliases;
+/* open Aliases;
 
-module Styles = {
-  let nav = ["pa3", "pa4-ns"];
-  let feedRoute = ["link", "dim", "black", "b", "f6", "f5-ns", "dib", "mr3"];
-  let draftsRoute = ["link", "dim", "f6", "f5-ns", "dib", "mr3", "black"];
-  let createRoute = [
-    "f6",
-    "link",
-    "dim",
-    "br1",
-    "ba",
-    "ph3",
-    "pv2",
-    "fr",
-    "mb2",
-    "dib",
-    "black",
-  ];
-};
-
+   module Styles = {
+     let nav = ["pa3", "pa4-ns"];
+     let feedRoute = ["link", "dim", "black", "b", "f6", "f5-ns", "dib", "mr3"];
+     let draftsRoute = ["link", "dim", "f6", "f5-ns", "dib", "mr3", "black"];
+     let createRoute = [
+       "f6",
+       "link",
+       "dim",
+       "br1",
+       "ba",
+       "ph3",
+       "pv2",
+       "fr",
+       "mb2",
+       "dib",
+       "black",
+     ];
+   }; */
 type route =
   | FeedPage
-  | DetailPage(int)
+  | DetailPage(string)
   | DraftsPage
   | RouteTestPage
   | NotFound
@@ -37,14 +36,20 @@ let reducer = (action, _state) =>
   | ChangeRoute(route) => ReasonReact.Update({route: route})
   };
 
-/** URL -> Route. */
+/** URL -> Route.
+ *
+ *             <Route exact path="/" component={FeedPage} />
+            <Route path="/drafts" component={DraftsPage} />
+            <Route path="/create" component={CreatePage} />
+            <Route path="/post/:id" component={DetailPage} />
+ */
 let routeFromUrl = (url: ReasonReact.Router.url) =>
   switch (url.path) {
   | [] => FeedPage
-  | ["feedpage"] => FeedPage
-  | ["detailpage", id] => DetailPage(int_of_string(id))
-  | ["draftspage"] => DraftsPage
-  | ["createpage"] => CreatePage
+  | ["/"] => FeedPage
+  | ["post", id] => DetailPage(id)
+  | ["drafts"] => DraftsPage
+  | ["create"] => CreatePage
   | ["RouteTestPage"] => RouteTestPage
   | _ => NotFound
   };

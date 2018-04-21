@@ -23,23 +23,25 @@ let component = ReasonReact.statelessComponent("Nav");
 
 let make = _children => {
   ...component,
-  render: self =>
-    <nav className=(makeCls(Styles.nav))>
-      <ul>
-        <Link href="feedpage" className=(makeCls(Styles.feedRoute))>
-          ("Feed" |> ste)
-        </Link>
-        <Link href="draftspage" className=(makeCls(Styles.draftsRoute))>
-          ("Drafts" |> ste)
-        </Link>
-        <Link href="RouteTestPage" className=(makeCls(Styles.draftsRoute))>
-          ("Routeurl" |> ste)
-        </Link>
-        <Link href="createpage" className=(makeCls(Styles.createRoute))>
-          ("+ Create Draft" |> ste)
-        </Link>
-      </ul>
-    </nav>,
+  render: _self =>
+    <div className="fl w-100 pl4 pr4">
+      <nav className="pa3 pa4-ns">
+        <ul>
+          <Link href="/" className=(makeCls(Styles.feedRoute))>
+            ("Feed" |> ste)
+          </Link>
+          <Link href="drafts" className=(makeCls(Styles.draftsRoute))>
+            ("Drafts" |> ste)
+          </Link>
+          <Link href="RouteTestPage" className=(makeCls(Styles.draftsRoute))>
+            ("Routeurl" |> ste)
+          </Link>
+          <Link href="create" className=(makeCls(Styles.createRoute))>
+            ("+ Create Draft" |> ste)
+          </Link>
+        </ul>
+      </nav>
+    </div>,
 };
 /* type link = {name: string};
 
