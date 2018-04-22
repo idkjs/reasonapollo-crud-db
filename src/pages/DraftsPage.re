@@ -40,8 +40,6 @@ let make = _children => {
                    |> Array.mapi((index, draft) =>
                         <PostItem
                           key=(index |> string_of_int)
-                          id=draft##id
-                          title=draft##title
                           isDraft=draft##isPublished
                           post=draft
                         />
