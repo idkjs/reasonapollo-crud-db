@@ -15,20 +15,6 @@ module GetFeed = [%graphql
 
 module GetFeedQuery = ReasonApollo.CreateQuery(GetFeed);
 
-module Error = {
-  module Styles = {
-    let error = ["flex w-100 h-100 items-center justify-center pt7"];
-  };
-  let component = ReasonReact.statelessComponent("Error");
-  let make = _children => {
-    ...component,
-    render: _self =>
-      <div className=(makeCls(Styles.error))>
-        <div> ("An unexpected error occured." |> ste) </div>
-      </div>,
-  };
-};
-
 let component = ReasonReact.statelessComponent("FeedPage");
 
 let make = _children => {
@@ -54,6 +40,7 @@ let make = _children => {
                           key=(index |> string_of_int)
                           id=post##id
                           title=post##title
+                          isDraft=post##isPublished
                           post
                         />
                       )

@@ -1,17 +1,54 @@
-module Styles = {
-  let loading = ["flex w-100 h-100 items-center justify-center pt7"];
-};
+open Aliases;
 
-let ste = ReasonReact.stringToElement;
+module GetFeed = [%graphql
+  {|
+       query getFeed {
+        drafts {
+          id
+          text
+          title
+          isPublished
+        }
+       }
+   |}
+];
 
-let makeCls = x => Belt.List.reduce(x, "", (a, b) => a ++ " " ++ b);
+module GetFeedQuery = ReasonApollo.CreateQuery(GetFeed);
 
 let component = ReasonReact.statelessComponent("DraftsPage");
 
 let make = _children => {
   ...component,
-  render: _self =>
-    <div className=(makeCls(Styles.loading))>
-      <div> ("Draftspage ..." |> ste) </div>
-    </div>,
+  render: _self => {
+    let getFeedQuery = GetFeed.make();
+    <GetFeedQuery variables=getFeedQuery##variables>
+      ...(
+           ({result}) =>
+             <div>
+               <h1> ("Drafts: " |> ste) </h1>
+               (
+                 switch (result) {
+                 | NoData => "No Data" |> ste
+                 | Error(e) =>
+                   Js.log(e);
+                   <Error />;
+                 | Loading => <Loading />
+                 | Data(response) =>
+                   response##drafts
+                   |> Array.mapi((index, draft) =>
+                        <PostItem
+                          key=(index |> string_of_int)
+                          id=draft##id
+                          title=draft##title
+                          isDraft=draft##isPublished
+                          draft
+                        />
+                      )
+                   |> ReasonReact.arrayToElement
+                 }
+               )
+             </div>
+         )
+    </GetFeedQuery>;
+  },
 };

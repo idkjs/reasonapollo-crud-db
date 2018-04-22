@@ -19,33 +19,27 @@
    //       title = `${title} (Draft)`
    //     }
       */
+/* type isDraft =
+   | IsDraft
+   | IsNotDraft; */
 let component = ReasonReact.statelessComponent("PostItem");
 
 /* let make = (~title, ~isDraft: Js.boolean, ~post, _children) => { */
-let make = (~title, ~post, ~id, _children) => {
+let make = (~title, ~isDraft, ~post, ~id, _children) => {
   ...component,
-  render: _self =>
+  render: _self => {
+    /* let title =
+       isDraft == Js.false_ ?
+         title |> Aliases.ste : title ++ "Draft" |> Aliases.ste; */
+    Js.log(isDraft);
     <div>
       <Link className="no-underline ma1" href=("/post/" ++ id)>
-        <h2 className="f3 black-80 fw4 lh-solid"> (title |> Aliases.ste) </h2>
+        <h2 className="f3 black-80 fw4 lh-solid"> title </h2>
         /* (post##title |> Aliases.ste) */
         <p className="black-80 fw3"> (post##text |> Aliases.ste) </p>
       </Link>
-    </div>,
+    </div>;
+  },
   /* let title = isDraft == Js.true_ ? title ++ "Draft" : title; */
   /* let title = ! post##isPublished ? post##title ++ "Draft" : post##title; */
 };
-/*
- let make = (~post, _children) => {
-   ...component,
-   render: _self => {
-     let title = ! post##isPublished ? post##title ++ "Draft" : post##title;
-     <div>
-       <Link className="no-underline ma1" href=("/detailpage/" ++ post##id)>
-         <h2 className="f3 black-80 fw4 lh-solid"> (title |> Aliases.ste) </h2>
-         /* (post##title |> Aliases.ste) */
-         <p className="black-80 fw3"> (post##text |> Aliases.ste) </p>
-       </Link>
-     </div>;
-   },
- }; */

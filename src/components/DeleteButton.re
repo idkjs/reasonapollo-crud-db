@@ -1,3 +1,25 @@
+/*
+ const DELETE_MUTATION = gql`
+   mutation DeleteMutatoin($id: ID!) {
+     deletePost(id: $id) {
+       id
+     }
+   }
+
+ */
+module DeletePost = [%graphql
+  {|
+    query PostQuery($id: ID!) {
+      post(id: $id) {
+        id
+        title
+        text
+        isPublished
+      }
+    }
+   |}
+];
+
 let component = ReasonReact.statelessComponent("DeleteButton");
 
 let deletePost = (_event, _self) => Js.log("clicked!");
