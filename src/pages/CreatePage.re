@@ -1,16 +1,51 @@
-let component = ReasonReact.statelessComponent("CreatePage");
+/* type state = {
+     title: string,
+     text: string,
+   }; */
+let ste = Aliases.ste;
 
-let make = (~title: string="CreatePage", _children) => {
+module CreateDraft = [%graphql
+  {|
+    mutation CreateDraftMutation($title: String!, $text: String!) {
+      createDraft(title: $title, text: $text) {
+        id
+        title
+        text
+      }
+    }
+|}
+];
+
+let component = ReasonReact.statelessComponent("CreateDraft");
+
+module CreateDraftMutation = ReasonApollo.CreateMutation(CreateDraft);
+
+let make = _children => {
   ...component,
-  render: _self =>
-    <div className="App">
-      <div className="App-header">
-        <h2> (ReasonReact.stringToElement(title)) </h2>
-      </div>
-      <p className="App-intro">
-        (ReasonReact.stringToElement("To get started, edit"))
-        <code> (ReasonReact.stringToElement(" src/app.re ")) </code>
-        (ReasonReact.stringToElement("and save to reload."))
-      </p>
-    </div>,
+  render: _self => {
+    let createDraftMutation =
+      CreateDraft.make(~title="Delete this one", ~text="24", ());
+    <CreateDraftMutation>
+      ...(
+           (mutation, _) =>
+             <div className="pa4 flex justify-center bg-white">
+               <h1> ("Create Draft" |> ste) </h1>
+               <button
+                 onClick=(
+                   (_) => {
+                     mutation(
+                       ~variables=createDraftMutation##variables,
+                       ~refetchQueries=[|"getAllPersons"|],
+                       (),
+                     )
+                     |> ignore;
+                     Js.log("SEND");
+                   }
+                 )>
+                 ("Create" |> ste)
+               </button>
+             </div>
+         )
+    </CreateDraftMutation>;
+  },
 };
