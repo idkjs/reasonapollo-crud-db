@@ -22,7 +22,6 @@ type route =
   | FeedPage
   | DetailPage(string)
   | DraftsPage
-  | RouteTestPage
   | NotFound
   | CreatePage;
 
@@ -50,7 +49,6 @@ let routeFromUrl = (url: ReasonReact.Router.url) =>
   | ["post", id] => DetailPage(id)
   | ["drafts"] => DraftsPage
   | ["create"] => CreatePage
-  | ["RouteTestPage"] => RouteTestPage
   | _ => NotFound
   };
 
@@ -79,7 +77,6 @@ let make = _children => {
         | FeedPage => <FeedPage />
         | DetailPage(id) => <DetailPage id />
         | DraftsPage => <DraftsPage />
-        | RouteTestPage => <RouteTestPage />
         | NotFound => <NotFound />
         | CreatePage => <CreatePage />
         }

@@ -39,6 +39,7 @@ let make = (~id, _children) => {
                      (post##title |> ste)
                    </h1>
                    <p className="black-80 fw3"> (post##text |> ste) </p>
+                   <DeleteButton />
                  </div>
                }
              }
