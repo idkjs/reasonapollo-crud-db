@@ -37,13 +37,13 @@ let make = _children => {
                  | Loading => <Loading />
                  | Data(response) =>
                    response##drafts
-                   |> Array.mapi((index, post) =>
+                   |> Array.mapi((index, draft) =>
                         <PostItem
                           key=(index |> string_of_int)
-                          id=post##id
-                          title=post##title
-                          isDraft=post##isPublished
-                          post
+                          id=draft##id
+                          title=draft##title
+                          isDraft=draft##isPublished
+                          post=draft
                         />
                       )
                    |> ReasonReact.arrayToElement
