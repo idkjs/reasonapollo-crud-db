@@ -5539,9 +5539,9 @@ readdirp@^2.0.0:
     readable-stream "^2.0.2"
     set-immediate-shim "^1.0.1"
 
-reason-apollo@^0.7.0-beta:
-  version "0.7.0-beta"
-  resolved "https://registry.yarnpkg.com/reason-apollo/-/reason-apollo-0.7.0-beta.tgz#3526c601d7a7503b1693f16083835d4e627d58c9"
+reason-apollo@^0.7.1-beta:
+  version "0.7.1-beta"
+  resolved "https://registry.yarnpkg.com/reason-apollo/-/reason-apollo-0.7.1-beta.tgz#3af35cfc66c3c615bb6d73aec60922042c4e605d"
 
 reason-react@^0.3.4:
   version "0.3.4"

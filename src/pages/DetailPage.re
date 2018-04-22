@@ -12,7 +12,7 @@ open Aliases;
    ` */
 module GetPost = [%graphql
   {|
-    query PostQuery($id: String!) {
+    query PostQuery($id: ID!) {
       post(id: $id) {
         id
         title
@@ -44,8 +44,10 @@ let make = (~id, _children) => {
                <Error />;
              | Loading => <Loading />
              | Data(response) =>
-               Js.log(response);
-               <div> (Aliases.ste("response##post##title")) </div>;
+               switch (response##post) {
+               | None => "No Person Data" |> ste
+               | Some(post) => <div> (post##title |> ste) </div>
+               }
              }
          )
     </GetPostQuery>;
