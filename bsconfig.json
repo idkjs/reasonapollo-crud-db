@@ -10,7 +10,8 @@
     "reason-react",
     "@glennsl/bs-json",
     "reason-reroute",
-    "reason-apollo"
+    "reason-apollo",
+    "bs-reform"
   ],
   "reason": {
     "react-jsx": 2

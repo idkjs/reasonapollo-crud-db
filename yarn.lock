@@ -1260,6 +1260,10 @@ bs-platform@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-3.0.0.tgz#38f200730db52fdea37819376b6ac3dfb20244c0"
 
+bs-reform@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/bs-reform/-/bs-reform-5.0.0.tgz#6b3788ea4297d51f24d1372f8c04706977cacb8d"
+
 bser@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/bser/-/bser-1.0.2.tgz#381116970b2a6deea5646dd15dd7278444b56169"
