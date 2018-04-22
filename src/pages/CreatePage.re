@@ -35,10 +35,11 @@ let make = _children => {
                    (_) => {
                      mutation(
                        ~variables=createDraftMutation##variables,
-                       ~refetchQueries=[|"getAllPersons"|],
+                       ~refetchQueries=[|"getFeedQuery"|],
                        (),
                      )
                      |> ignore;
+                     ReasonReact.Router.push("/drafts");
                      Js.log("SEND");
                    }
                  )>
