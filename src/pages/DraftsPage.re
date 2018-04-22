@@ -1,6 +1,6 @@
 open Aliases;
 
-module GetDraft = [%graphql
+module GetDrafts = [%graphql
   {|
     query DraftsQuery {
       drafts {
@@ -13,15 +13,15 @@ module GetDraft = [%graphql
    |}
 ];
 
-module GetDraftQuery = ReasonApollo.CreateQuery(GetDraft);
+module GetDraftsQuery = ReasonApollo.CreateQuery(GetDrafts);
 
 let component = ReasonReact.statelessComponent("DraftsPage");
 
 let make = _children => {
   ...component,
   render: _self => {
-    let getDraftQuery = GetDraft.make();
-    <GetDraftQuery variables=getDraftQuery##variables>
+    let getDraftsQuery = GetDrafts.make();
+    <GetDraftsQuery variables=getDraftsQuery##variables>
       ...(
            ({result}) =>
              <div>
@@ -49,6 +49,6 @@ let make = _children => {
                )
              </div>
          )
-    </GetDraftQuery>;
+    </GetDraftsQuery>;
   },
 };

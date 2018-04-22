@@ -1,24 +1,25 @@
 open Aliases;
 
-module DeletePost = [%graphql
+module PublishPost = [%graphql
   {|
-    mutation DeletePost ($id: ID!){
-      deletePost(id:$id){
+    mutation PublishMutation($id: ID!) {
+      publish(id: $id) {
         id
+        isPublished
       }
     }
    |}
 ];
 
-module DeletePostMutation = ReasonApollo.CreateMutation(DeletePost);
+module PublishPostMutation = ReasonApollo.CreateMutation(PublishPost);
 
 let component = ReasonReact.statelessComponent("DeleteButton");
 
 let make = (~id, _children) => {
   ...component,
   render: _self => {
-    let deletePostMutation = DeletePost.make(~id, ());
-    <DeletePostMutation>
+    let publishPostMutation = PublishPost.make(~id, ());
+    <PublishPostMutation>
       ...(
            (mutation, _) =>
              <a
@@ -26,17 +27,18 @@ let make = (~id, _children) => {
                onClick=(
                  (_) => {
                    mutation(
-                     ~variables=deletePostMutation##variables,
-                     ~refetchQueries=[|"getDraftsQuery"|],
+                     ~variables=publishPostMutation##variables,
+                     ~refetchQueries=[|"getFeedQuery"|],
                      (),
                    )
                    |> ignore;
+                   ReasonReact.Router.push("/");
                    Js.log("SEND");
                  }
                )>
-               ("Delete" |> ste)
+               ("Publish" |> ste)
              </a>
          )
-    </DeletePostMutation>;
+    </PublishPostMutation>;
   },
 };

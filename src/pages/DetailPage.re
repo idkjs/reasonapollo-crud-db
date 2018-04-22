@@ -17,10 +17,16 @@ module GetPostQuery = ReasonApollo.CreateQuery(GetPost);
 
 let component = ReasonReact.statelessComponent("DetailPage");
 
+/* type renderButtons =
+   | OneButton(Js.boolean)
+   | TwoButtons(Js.boolean); */
 let make = (~id, _children) => {
   ...component,
   render: _self => {
     let getPostQuery = GetPost.make(~id, ());
+    /* let buttons = published => published == Js.true_ ? <DeleteButton id /> : <DeleteButton id /> <PublishButton id />; */
+    let renderPublishButton = (condition, component) =>
+      if (condition) {component} else {ReasonReact.nullElement};
     <GetPostQuery variables=getPostQuery##variables>
       ...(
            ({result}) =>
@@ -39,7 +45,13 @@ let make = (~id, _children) => {
                      (post##title |> ste)
                    </h1>
                    <p className="black-80 fw3"> (post##text |> ste) </p>
-                   <DeleteButton />
+                   <DeleteButton id />
+                   (
+                     renderPublishButton(
+                       post##isPublished == Js.false_,
+                       <PublishButton id />,
+                     )
+                   )
                  </div>
                }
              }
