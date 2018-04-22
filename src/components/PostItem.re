@@ -28,10 +28,10 @@ let component = ReasonReact.statelessComponent("PostItem");
 let make = (~title, ~isDraft, ~post, ~id, _children) => {
   ...component,
   render: _self => {
-    /* let title =
-       isDraft == Js.false_ ?
-         title |> Aliases.ste : title ++ "Draft" |> Aliases.ste; */
-    Js.log(isDraft);
+    let title =
+      isDraft == Js.true_ ?
+        title |> Aliases.ste : title ++ " (Draft)" |> Aliases.ste;
+    Js.log(title);
     <div>
       <Link className="no-underline ma1" href=("/post/" ++ id)>
         <h2 className="f3 black-80 fw4 lh-solid"> title </h2>

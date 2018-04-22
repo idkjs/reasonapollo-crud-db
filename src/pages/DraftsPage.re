@@ -1,31 +1,33 @@
 open Aliases;
 
-module GetFeed = [%graphql
+module GetDraft = [%graphql
   {|
-       query getFeed {
-        drafts {
-          id
-          text
-          title
-          isPublished
-        }
-       }
+    query DraftsQuery {
+      drafts {
+        id
+        text
+        title
+        isPublished
+      }
+    }
    |}
 ];
 
-module GetFeedQuery = ReasonApollo.CreateQuery(GetFeed);
+module GetDraftQuery = ReasonApollo.CreateQuery(GetDraft);
 
 let component = ReasonReact.statelessComponent("DraftsPage");
 
 let make = _children => {
   ...component,
   render: _self => {
-    let getFeedQuery = GetFeed.make();
-    <GetFeedQuery variables=getFeedQuery##variables>
+    let getDraftQuery = GetDraft.make();
+    <GetDraftQuery variables=getDraftQuery##variables>
       ...(
            ({result}) =>
              <div>
-               <h1> ("Drafts: " |> ste) </h1>
+               <div className="flex justify-between items-center">
+                 <h1> ("Drafts" |> ste) </h1>
+               </div>
                (
                  switch (result) {
                  | NoData => "No Data" |> ste
@@ -35,13 +37,13 @@ let make = _children => {
                  | Loading => <Loading />
                  | Data(response) =>
                    response##drafts
-                   |> Array.mapi((index, draft) =>
+                   |> Array.mapi((index, post) =>
                         <PostItem
                           key=(index |> string_of_int)
-                          id=draft##id
-                          title=draft##title
-                          isDraft=draft##isPublished
-                          draft
+                          id=post##id
+                          title=post##title
+                          isDraft=post##isPublished
+                          post
                         />
                       )
                    |> ReasonReact.arrayToElement
@@ -49,6 +51,6 @@ let make = _children => {
                )
              </div>
          )
-    </GetFeedQuery>;
+    </GetDraftQuery>;
   },
 };
