@@ -1,4 +1,3 @@
-
 type route =
   | FeedPage
   | DetailPage(string)
@@ -44,15 +43,16 @@ let make = _children => {
     ),
   ],
   render: self =>
-  <div className="fl w-100 pl4 pr4">
-    (
-      switch (self.state.route) {
-      | FeedPage => <FeedPage />
-      | DetailPage(id) => <DetailPage id />
-      | DraftsPage => <DraftsPage />
-      | NotFound => <NotFound />
-      | CreatePage => <CreatePage />
-      }
-    )
-    </div>
+    <div className="fl w-100 pl4 pr4">
+      <Nav />
+      (
+        switch (self.state.route) {
+        | FeedPage => <FeedPage />
+        | DetailPage(id) => <DetailPage id />
+        | DraftsPage => <DraftsPage />
+        | NotFound => <NotFound />
+        | CreatePage => <CreatePage />
+        }
+      )
+    </div>,
 };

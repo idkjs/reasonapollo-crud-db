@@ -31,7 +31,7 @@ let make = (~id, _children) => {
                      (),
                    )
                    |> ignore;
-                   Js.log("SEND");
+                   ReasonReact.Router.push("/");
                  }
                )>
                ("Delete" |> ste)
