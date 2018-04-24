@@ -1,91 +1,90 @@
-/* type state = {
-     title: string,
-     text: string,
-   };
+open Belt;
 
-   let ste = Aliases.ste;
+type action =
+  | ChangeText(string)
+  | AddNewPost
+  | CancelNewPost
+  | DeleteAll;
 
-   module CreateDraft = [%graphql
-     {|
-       mutation CreateDraftMutation($title: String!, $text: String!) {
-         createDraft(title: $title, text: $text) {
-           id
-           title
-           text
-         }
-       }
-   |}
-   ];
+type state = {
+  posts: list(PostItem.post),
+  currentText: string,
+};
 
-   let valueFromEvent = event : string => (
-                                            event
-                                            |> ReactEventRe.Form.target
-                                            |> ReactDOMRe.domElementToObj
-                                          )##value;
+let savePosts = posts => Storage.savePosts(posts);
 
-   let component = ReasonReact.reducerComponent("CreateDraft");
+let reducer = (action, state: state) =>
+  switch (action) {
+  | ChangeText(str) => ReasonReact.Update({...state, currentText: str})
+  | AddNewPost =>
+    switch (String.trim(state.currentText)) {
+    | "" => ReasonReact.NoUpdate
+    | title =>
+      ReasonReact.UpdateWithSideEffects(
+        {
+          let newPost: PostItem.post = {
+            /* id: Js.Date.(make() |> toISOString), */
+            title,
+            text,
+          };
+          let posts = [newPost] @ state.posts;
+          {posts, currentText: ""};
+        },
+        (self => savePosts(self.state.posts)),
+      )
+    }
+  | CancelNewPost => ReasonReact.Update({...state, currentText: ""})
+  | DeleteAll =>
+    ReasonReact.UpdateWithSideEffects(
+      {...state, posts: []},
+      (self => savePosts(self.state.posts)),
+    )
+  };
 
-   module CreateDraftMutation = ReasonApollo.CreateMutation(CreateDraft);
+let initialState = () => {currentText: "", posts: Storage.loadPosts()};
 
-   let make = _children => {
-     ...component,
-     initialState: () => {title: "", text: ""},
-     render: _self => {
-       let createDraftMutation =(state) =>
-         CreateDraft.make(...state, ());
-       <CreateDraftMutation>
-         ...(
-              (mutation, _) =>
-                <div className="pa4 flex justify-center bg-white">
-                  <form onClick=(
-                   (_) => {
-                     mutation(
-                       ~variables=createDraftMutation##variables,
-                       ~refetchQueries=[|"getFeedQuery"|],
-                       (),
-                     )
-                     |> ignore;
-                     ReasonReact.Router.push("/drafts");
-                     Js.log("SEND");
-                   }
-                 )>
-                  <input autoFocus=Js.true_
-         className="w-100 pa2 mv2 br2 b--black-20 bw1"
-         placeholder="Add a title"
-         value=text
-         _type="text"
-         onChange=(update((event, {state: text}) => ReasonReact.Update(valueFromEvent(event))))
-         onKeyDown=(
-           update(
-             (event, _) =>
-               if (ReactEventRe.Keyboard.key(event) == "Enter") {
-                 addTodo(text);
-                 ReasonReact.Update("")
-               } else {
-                 ReasonReact.NoUpdate
-               }
-           )
-         )
-   />
-                    <h1> ("Create Draft" |> ste) </h1>
-                    <button
-                      onClick=(
-                        (_) => {
-                          mutation(
-                            ~variables=createDraftMutation##variables,
-                            ~refetchQueries=[|"getFeedQuery"|],
-                            (),
-                          )
-                          |> ignore;
-                          ReasonReact.Router.push("/drafts");
-                          Js.log("SEND");
-                        }
-                      )>
-                      ("Create" |> ste)
-                    </button>
-                  </form>
-                </div>
-            )
-       </CreateDraftMutation>;
-     },
-   }; */
+let onInputChange = ({ReasonReact.send}, e) =>
+  send(
+    ChangeText(
+      ReactDOMRe.domElementToObj(ReactEventRe.Form.target(e))##value,
+    ),
+  );
+
+let onInputKeyDown = ({ReasonReact.send}, e) => {
+  let key = ReactEventRe.Keyboard.key(e);
+  switch (key) {
+  | "Enter" =>
+    e |> ReactEventRe.Keyboard.preventDefault;
+    send(AddNewPost);
+  | "Escape" =>
+    e |> ReactEventRe.Keyboard.preventDefault;
+    send(CancelNewPost);
+  | _ => ()
+  };
+};
+
+let onPostToggle = ({ReasonReact.send}, todo: PostItem.post) =>
+  send(TogglePost(todo));
+
+let onRemoveAllClick = ({ReasonReact.send}, _e) => send(DeleteAll);
+
+let component = ReasonReact.reducerComponent("App");
+
+let make = _children => {
+  ...component,
+  reducer,
+  initialState,
+  render: self =>
+    <div>
+      <input
+        value=self.state.currentText
+        onChange=(onInputChange(self))
+        onKeyDown=(onInputKeyDown(self))
+      />
+      <PostList
+        posts=self.state.posts
+        onToggle=(onPostToggle(self))
+        onRemoveAll=(onRemoveAllClick(self))
+      />
+    </div>,
+};

@@ -1,6 +1,6 @@
 open Aliases;
 
-let component = ReasonReact.statelessComponent("PostItem");
+let component = ReasonReact.statelessComponent("Post");
 
 /* let make = (~title, ~isDraft: Js.boolean, ~post, _children) => { */
 let make = (~isDraft, ~post, _children) => {

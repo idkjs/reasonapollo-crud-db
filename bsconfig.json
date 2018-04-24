@@ -11,7 +11,8 @@
     "@glennsl/bs-json",
     "reason-reroute",
     "reason-apollo",
-    "bs-reform"
+    "bs-reform",
+    "re-formality"
   ],
   "reason": {
     "react-jsx": 2

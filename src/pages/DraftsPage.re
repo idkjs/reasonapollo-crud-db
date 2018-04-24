@@ -38,7 +38,7 @@ let make = _children => {
                  | Data(response) =>
                    response##drafts
                    |> Array.mapi((index, draft) =>
-                        <PostItem
+                        <Post
                           key=(index |> string_of_int)
                           isDraft=draft##isPublished
                           post=draft
