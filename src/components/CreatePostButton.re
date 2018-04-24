@@ -1,5 +1,4 @@
-open Aliases;
-
+/* open Aliases; */
 module CreatePost = [%graphql
   {|
   mutation CreatePostMutation ($text: String!, $title: String!) {
@@ -23,8 +22,8 @@ let make = (~text, ~title, _children) => {
     <CreatePostMutation>
       ...(
            (mutation, _) =>
-             <a
-               className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
+             <input
+               className="pa3 bg-black-10"
                onClick=(
                  (_) => {
                    mutation(
@@ -36,10 +35,23 @@ let make = (~text, ~title, _children) => {
                    ReasonReact.Router.push("/drafts");
                    Js.log("SEND");
                  }
-               )>
-               ("Create" |> ste)
-             </a>
+               )
+               value="Create"
+               _type="submit"
+             />
          )
     </CreatePostMutation>;
   },
 };
+/*
+
+ <input
+                   className={`pa3 bg-black-10 bn ${this.state.text &&
+                     this.state.title &&
+                     'dim pointer'}`}
+                   disabled={!this.state.text || !this.state.title}
+                   type="submit"
+                   value="Create"
+
+
+ */
