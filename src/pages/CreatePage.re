@@ -1,74 +1,44 @@
-open Belt;
-
 type action =
+  | ChangeTitle(string)
   | ChangeText(string)
-  | AddNewPost
-  | CancelNewPost
-  | DeleteAll;
+  /* | AddNewPost */
+  | CancelNewPost;
 
 type state = {
-  posts: list(PostItem.post),
-  currentText: string,
+  title: string,
+  text: string,
 };
 
-let savePosts = posts => Storage.savePosts(posts);
-
-let reducer = (action, state: state) =>
+/* reducer: (action, state) =>
+       switch action {
+       | ChangeName(name) => ReasonReact.Update({...state, name})
+       | ChangeFavoriteAnimal(favoriteAnimal) =>
+         ReasonReact.Update({...state, favoriteAnimal})
+   }, */
+let reducer = (action, state) =>
   switch (action) {
-  | ChangeText(str) => ReasonReact.Update({...state, currentText: str})
-  | AddNewPost =>
-    switch (String.trim(state.currentText)) {
-    | "" => ReasonReact.NoUpdate
-    | title =>
-      ReasonReact.UpdateWithSideEffects(
-        {
-          let newPost: PostItem.post = {
-            /* id: Js.Date.(make() |> toISOString), */
-            title,
-            text,
-          };
-          let posts = [newPost] @ state.posts;
-          {posts, currentText: ""};
-        },
-        (self => savePosts(self.state.posts)),
-      )
-    }
-  | CancelNewPost => ReasonReact.Update({...state, currentText: ""})
-  | DeleteAll =>
-    ReasonReact.UpdateWithSideEffects(
-      {...state, posts: []},
-      (self => savePosts(self.state.posts)),
-    )
+  | ChangeTitle(title) => ReasonReact.Update({...state, title})
+  | ChangeText(text) => ReasonReact.Update({...state, text})
+  | CancelNewPost => ReasonReact.Update({title: "", text: ""})
   };
 
-let initialState = () => {currentText: "", posts: Storage.loadPosts()};
+let initialState = () => {title: "", text: ""};
 
-let onInputChange = ({ReasonReact.send}, e) =>
+let onTextInputChange = ({ReasonReact.send}, e) =>
   send(
     ChangeText(
       ReactDOMRe.domElementToObj(ReactEventRe.Form.target(e))##value,
     ),
   );
 
-let onInputKeyDown = ({ReasonReact.send}, e) => {
-  let key = ReactEventRe.Keyboard.key(e);
-  switch (key) {
-  | "Enter" =>
-    e |> ReactEventRe.Keyboard.preventDefault;
-    send(AddNewPost);
-  | "Escape" =>
-    e |> ReactEventRe.Keyboard.preventDefault;
-    send(CancelNewPost);
-  | _ => ()
-  };
-};
+let onTitleInputChange = ({ReasonReact.send}, e) =>
+  send(
+    ChangeTitle(
+      ReactDOMRe.domElementToObj(ReactEventRe.Form.target(e))##value,
+    ),
+  );
 
-let onPostToggle = ({ReasonReact.send}, todo: PostItem.post) =>
-  send(TogglePost(todo));
-
-let onRemoveAllClick = ({ReasonReact.send}, _e) => send(DeleteAll);
-
-let component = ReasonReact.reducerComponent("App");
+let component = ReasonReact.reducerComponent("CreatePost");
 
 let make = _children => {
   ...component,
@@ -76,15 +46,8 @@ let make = _children => {
   initialState,
   render: self =>
     <div>
-      <input
-        value=self.state.currentText
-        onChange=(onInputChange(self))
-        onKeyDown=(onInputKeyDown(self))
-      />
-      <PostList
-        posts=self.state.posts
-        onToggle=(onPostToggle(self))
-        onRemoveAll=(onRemoveAllClick(self))
-      />
+      <input value=self.state.title onChange=(onTitleInputChange(self)) />
+      <input value=self.state.text onChange=(onTextInputChange(self)) />
+      <CreatePostButton title=self.state.title text=self.state.text />
     </div>,
 };
