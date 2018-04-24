@@ -1,4 +1,4 @@
-open Aliases;
+open Utils;
 
 module DeletePost = [%graphql
   {|

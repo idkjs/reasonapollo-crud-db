@@ -1,8 +1,9 @@
-open Aliases;
+open Utils;
 
 type action =
   | ChangeTitle(string)
   | ChangeText(string);
+
 type state = {
   title: string,
   text: string,
@@ -13,6 +14,7 @@ let handleClick = (href, event) =>
     ReactEventRe.Mouse.preventDefault(event);
     ReasonReact.Router.push(href);
   };
+
 let reducer = (action, state) =>
   switch (action) {
   | ChangeTitle(title) => ReasonReact.Update({...state, title})
@@ -66,7 +68,7 @@ let make = _children => {
         />
         <CreatePostButton title=self.state.title text=self.state.text />
         <a className="f6 pointer" onClick=(event => handleClick("/", event))>
-            (" or cancel" |> ste)
+          (" or cancel" |> ste)
         </a>
       </form>
     </div>,

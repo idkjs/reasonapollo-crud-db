@@ -1,4 +1,4 @@
-/* open Aliases; */
+/* open Utils; */
 module CreatePost = [%graphql
   {|
   mutation CreatePostMutation ($text: String!, $title: String!) {

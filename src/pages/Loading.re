@@ -1,4 +1,4 @@
-open Aliases;
+open Utils;
 
 let component = ReasonReact.statelessComponent("Loading");
 

@@ -1,4 +1,4 @@
-open Aliases;
+open Utils;
 
 module Styles = {
   let nav = ["pa3", "pa4-ns"];

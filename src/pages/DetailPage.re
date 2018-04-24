@@ -1,4 +1,4 @@
-open Aliases;
+open Utils;
 
 module GetPost = [%graphql
   {|
