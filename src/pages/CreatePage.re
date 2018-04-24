@@ -65,7 +65,7 @@ let make = _children => {
           required=Js.true_
         />
         <CreatePostButton title=self.state.title text=self.state.text />
-        <a className="f6 pointer" onClick=(event => handleClick("/",event))>
+        <a className="f6 pointer" onClick=(event => handleClick("/", event))>
             (" or cancel" |> ste)
         </a>
       </form>

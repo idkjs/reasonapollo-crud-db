@@ -2,10 +2,6 @@
 # yarn lockfile v1
 
 
-"@glennsl/bs-json@^1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@glennsl/bs-json/-/bs-json-1.3.1.tgz#64fc470cbe5e9779f49226a2d877169d3c67296a"
-
 "@types/async@2.0.47":
   version "2.0.47"
   resolved "https://registry.yarnpkg.com/@types/async/-/async-2.0.47.tgz#f49ba1dd1f189486beb6e1d070a850f6ab4bd521"
@@ -1259,10 +1255,6 @@ bs-loader@^1.8.0:
 bs-platform@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-3.0.0.tgz#38f200730db52fdea37819376b6ac3dfb20244c0"
-
-bs-reform@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/bs-reform/-/bs-reform-5.0.0.tgz#6b3788ea4297d51f24d1372f8c04706977cacb8d"
 
 bser@1.0.2:
   version "1.0.2"
@@ -5307,10 +5299,6 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-re-formality@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/re-formality/-/re-formality-0.8.0.tgz#e67e0fd0a2c6639296fb41ffb17116354c7a02bf"
-
 react-apollo@2.1.3:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-2.1.3.tgz#5eb02cdf18cc4bdeb615bda94baedb50354e94e5"
@@ -5557,10 +5545,6 @@ reason-react@^0.3.4:
   dependencies:
     react ">=15.0.0 || >=16.0.0"
     react-dom ">=15.0.0 || >=16.0.0"
-
-reason-reroute@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/reason-reroute/-/reason-reroute-0.0.4.tgz#ea480951222da8059c739c645ee9b68860f27738"
 
 reason-scripts@0.8.0:
   version "0.8.0"
