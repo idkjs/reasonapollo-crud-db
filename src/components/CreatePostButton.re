@@ -29,11 +29,11 @@ let make = (~text, ~title, _children) => {
                  (_) => {
                    mutation(
                      ~variables=createPostMutation##variables,
-                     ~refetchQueries=[|"getFeedQuery"|],
+                     ~refetchQueries=[|"getDraftsQuery"|],
                      (),
                    )
                    |> ignore;
-                   ReasonReact.Router.push("/");
+                   ReasonReact.Router.push("/drafts");
                    Js.log("SEND");
                  }
                )>
