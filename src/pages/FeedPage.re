@@ -25,7 +25,7 @@ let make = _children => {
       ...(
            ({result}) =>
              <div>
-               <div className="flex justify-between items-center">
+               <div className="fl w-100 pl4 pr4">
                  <h1> ("Feed" |> ste) </h1>
                </div>
                (

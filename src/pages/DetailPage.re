@@ -44,7 +44,7 @@ let make = (~id, _children) => {
                    <DeleteButton id />
                    (
                      renderPublishButton(
-                       post##isPublished == Js.false_,
+                       post##isPublished == false,
                        <PublishButton id />,
                      )
                    )

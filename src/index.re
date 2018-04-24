@@ -7,6 +7,7 @@ external register_service_worker : unit => unit = "default";
 
 ReactDOMRe.renderToElementWithId(
   <ReasonApollo.Provider client=Client.instance>
+    <Nav />
     <App />
   </ReasonApollo.Provider>,
   "root",

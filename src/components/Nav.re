@@ -25,17 +25,15 @@ let make = _children => {
   ...component,
   render: _self =>
     <nav className="pa3 pa4-ns">
-      <ul>
-        <Link href="/" className=(makeCls(Styles.feedRoute))>
-          ("Feed" |> ste)
-        </Link>
-        <Link href="drafts" className=(makeCls(Styles.draftsRoute))>
-          ("Drafts" |> ste)
-        </Link>
-        <Link href="create" className=(makeCls(Styles.createRoute))>
-          ("+ Create Draft" |> ste)
-        </Link>
-      </ul>
+      <Link href="/" className=(makeCls(Styles.feedRoute))>
+        ("Feed" |> ste)
+      </Link>
+      <Link href="drafts" className=(makeCls(Styles.draftsRoute))>
+        ("Drafts" |> ste)
+      </Link>
+      <Link href="create" className=(makeCls(Styles.createRoute))>
+        ("+ Create Draft" |> ste)
+      </Link>
     </nav>,
 };
 /* type link = {name: string};
