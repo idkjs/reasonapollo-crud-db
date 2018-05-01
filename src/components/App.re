@@ -27,7 +27,7 @@ let routeFromUrl = (url: ReasonReact.Router.url) =>
 
 let component = ReasonReact.reducerComponent("App");
 
-let ste = ReasonReact.stringToElement;
+let ste = ReasonReact.string;
 
 let make = _children => {
   ...component,

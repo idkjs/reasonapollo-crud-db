@@ -44,7 +44,7 @@ let make = _children => {
                           post
                         />
                       )
-                   |> ReasonReact.arrayToElement
+                   |> ReasonReact.array
                  }
                )
              </div>

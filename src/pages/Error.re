@@ -10,7 +10,7 @@ let make = (~value=?, _children) => {
       (
         switch (value) {
         | Some(error) => error |> ste
-        | None => ReasonReact.nullElement
+        | None => ReasonReact.null
         }
       )
     </div>,

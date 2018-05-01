@@ -7,7 +7,8 @@ let make = (~isDraft, ~post, _children) => {
   ...component,
   render: _self => {
     let title =
-      isDraft == true ? post##title |> ste : post##title ++ " (Draft)" |> ste;
+      isDraft == Js.true_ ?
+        post##title |> ste : post##title ++ " (Draft)" |> ste;
     Js.log(title);
     <Link className="no-underline ma1" href=("/post/" ++ post##id)>
       <h2 className="f3 black-80 fw4 lh-solid"> title </h2>

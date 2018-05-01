@@ -22,7 +22,7 @@ let make = (~id, _children) => {
   render: _self => {
     let getPostQuery = GetPost.make(~id, ());
     let renderPublishButton = (condition, component) =>
-      if (condition) {component} else {ReasonReact.nullElement};
+      if (condition) {component} else {ReasonReact.null};
     <GetPostQuery variables=getPostQuery##variables>
       ...(
            ({result}) =>
@@ -44,7 +44,7 @@ let make = (~id, _children) => {
                    <DeleteButton id />
                    (
                      renderPublishButton(
-                       post##isPublished == false,
+                       post##isPublished == Js.false_,
                        <PublishButton id />,
                      )
                    )
